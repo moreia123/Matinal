@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - Cadastrar Perguntas</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <script>
+        // Configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyALiQ04FR2WZpaEkR20HUr1AVDS31QBQkU",
+            authDomain: "matinal-3dab3.firebaseapp.com",
+            projectId: "matinal-3dab3",
+            storageBucket: "matinal-3dab3.firebasestorage.app",
+            messagingSenderId: "168000386914",
+            appId: "1:168000386914:web:f0f71c16e81e974586de3b",
+            measurementId: "G-XFC6LTQ7VL"
+        };
+
+        // Inicializa o Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Painel Administrativo - Cadastrar Perguntas</h1>
+        <form id="question-form">
+            <label for="day">Selecione o dia:</label>
+            <select id="day" required>
+                <option value="segunda">Segunda-feira</option>
+                <option value="terca">Terça-feira</option>
+                <option value="quarta">Quarta-feira</option>
+                <option value="quinta">Quinta-feira</option>
+                <option value="sexta">Sexta-feira</option>
+            </select>
+
+            <label for="question">Pergunta:</label>
+            <input type="text" id="question" placeholder="Digite a pergunta" required>
+
+            <label>Opções de Resposta:</label>
+            <div id="options">
+                <input type="text" class="option" placeholder="Opção A" required>
+                <input type="text" class="option" placeholder="Opção B" required>
+                <input type="text" class="option" placeholder="Opção C" required>
+                <input type="text" class="option" placeholder="Opção D" required>
+            </div>
+
+            <label for="correct-answer">Resposta Correta:</label>
+            <select id="correct-answer" required>
+                <option value="a">Opção A</option>
+                <option value="b">Opção B</option>
+                <option value="c">Opção C</option>
+                <option value="d">Opção D</option>
+            </select>
+
+            <button type="submit">Cadastrar Pergunta</button>
+        </form>
+
+        <div id="status"></div>
+    </div>
+
+    <script>
+        // Função para cadastrar a pergunta no Firebase
+        document.getElementById('question-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const day = document.getElementById('day').value;
+            const question = document.getElementById('question').value;
+            const options = Array.from(document.querySelectorAll('.option')).map(input => input.value);
+            const correctAnswer = document.getElementById('correct-answer').value;
+
+            // Cria o objeto da pergunta
+            const questionData = {
+                question: question,
+                options: options.map((text, index) => ({
+                    text: text,
+                    value: ['a', 'b', 'c', 'd'][index]
+                })),
+                correctAnswer: correctAnswer
+            };
+
+            // Salva a pergunta no Firebase
+            database.ref('perguntas/' + day).push(questionData)
+                .then(() => {
+                    document.getElementById('status').textContent = "Pergunta cadastrada com sucesso!";
+                    document.getElementById('question-form').reset(); // Limpa o formulário
+                })
+                .catch((error) => {
+                    document.getElementById('status').textContent = "Erro ao cadastrar pergunta: " + error.message;
+                });
+        });
+    </script>
+</body>
+</html>
