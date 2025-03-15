@@ -26,6 +26,16 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
+        // Verifica se o banco de dados está acessível
+        const testRef = ref(database, 'test');
+        push(testRef, { message: "Testando conexão com o Firebase..." })
+            .then(() => {
+                console.log("Conexão com o Firebase Realtime Database estabelecida com sucesso!");
+            })
+            .catch((error) => {
+                console.error("Erro ao conectar ao Firebase Realtime Database:", error);
+            });
+
         // Perguntas para cada dia
         const perguntas = {
             segunda: [
@@ -39,46 +49,7 @@
                     ],
                     correctAnswer: "b"
                 },
-                {
-                    question: "Qual é a melhor forma de engajar a equipe?",
-                    options: [
-                        { text: "a) Oferecer recompensas.", value: "a" },
-                        { text: "b) Promover treinamentos.", value: "b" },
-                        { text: "c) Criar um ambiente colaborativo.", value: "c" },
-                        { text: "d) Todas as anteriores.", value: "d" }
-                    ],
-                    correctAnswer: "d"
-                },
-                {
-                    question: "Qual é a importância de revisar as metas diariamente?",
-                    options: [
-                        { text: "a) Manter o foco.", value: "a" },
-                        { text: "b) Ajustar estratégias.", value: "b" },
-                        { text: "c) Motivar a equipe.", value: "c" },
-                        { text: "d) Todas as anteriores.", value: "d" }
-                    ],
-                    correctAnswer: "d"
-                },
-                {
-                    question: "Como dividir metas semanais em metas diárias?",
-                    options: [
-                        { text: "a) Definir um número fixo de tarefas por dia.", value: "a" },
-                        { text: "b) Priorizar as tarefas mais importantes.", value: "b" },
-                        { text: "c) Ajustar conforme o andamento da semana.", value: "c" },
-                        { text: "d) Todas as anteriores.", value: "d" }
-                    ],
-                    correctAnswer: "d"
-                },
-                {
-                    question: "Qual é a importância de um planejamento bem estruturado?",
-                    options: [
-                        { text: "a) Aumentar a produtividade.", value: "a" },
-                        { text: "b) Reduzir o estresse.", value: "b" },
-                        { text: "c) Garantir o cumprimento das metas.", value: "c" },
-                        { text: "d) Todas as anteriores.", value: "d" }
-                    ],
-                    correctAnswer: "d"
-                }
+                // Adicione mais perguntas aqui...
             ],
             terca: [
                 // 5 perguntas para Terça-feira...
