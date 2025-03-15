@@ -2,7 +2,7 @@
 function generateQRCode(day) {
     var qrCodeDiv = document.getElementById('qr-code-' + day);
     qrCodeDiv.innerHTML = ''; // Limpa o conteúdo anterior
-    const url = `https://seu-usuario.github.io/seu-repositorio/quiz.html?day=${day}`;
+    const url = `https://seu-usuario.github.io/seu-repositorio/quiz.php?day=${day}`;
     var qrCode = new QRCode(qrCodeDiv, {
         text: url,
         width: 200,
