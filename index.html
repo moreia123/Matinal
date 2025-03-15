@@ -159,59 +159,39 @@
             </div>
         </div>
 
-        <!-- Páginas de Quiz -->
-        <div id="quiz-segunda" class="quiz-page">
-            <h3>Quiz: Segunda-feira</h3>
-            <div class="qr-code" id="qr-code-segunda"></div>
-            <div class="timer" id="timer-segunda">20</div>
-            <div class="result" id="result-segunda"></div>
-            <div class="back-button">
-                <button onclick="goBack()">Voltar ao Conteúdo</button>
-            </div>
-        </div>
-
-        <div id="quiz-terca" class="quiz-page">
-            <h3>Quiz: Terça-feira</h3>
-            <div class="qr-code" id="qr-code-terca"></div>
-            <div class="timer" id="timer-terca">20</div>
-            <div class="result" id="result-terca"></div>
-            <div class="back-button">
-                <button onclick="goBack()">Voltar ao Conteúdo</button>
-            </div>
-        </div>
-
-        <div id="quiz-quarta" class="quiz-page">
-            <h3>Quiz: Quarta-feira</h3>
-            <div class="qr-code" id="qr-code-quarta"></div>
-            <div class="timer" id="timer-quarta">20</div>
-            <div class="result" id="result-quarta"></div>
-            <div class="back-button">
-                <button onclick="goBack()">Voltar ao Conteúdo</button>
-            </div>
-        </div>
-
-        <div id="quiz-quinta" class="quiz-page">
-            <h3>Quiz: Quinta-feira</h3>
-            <div class="qr-code" id="qr-code-quinta"></div>
-            <div class="timer" id="timer-quinta">20</div>
-            <div class="result" id="result-quinta"></div>
-            <div class="back-button">
-                <button onclick="goBack()">Voltar ao Conteúdo</button>
-            </div>
-        </div>
-
-        <div id="quiz-sexta" class="quiz-page">
-            <h3>Quiz: Sexta-feira</h3>
-            <div class="qr-code" id="qr-code-sexta"></div>
-            <div class="timer" id="timer-sexta">20</div>
-            <div class="result" id="result-sexta"></div>
-            <div class="back-button">
-                <button onclick="goBack()">Voltar ao Conteúdo</button>
-            </div>
+        <!-- Ranking -->
+        <div class="ranking">
+            <h2>Ranking</h2>
+            <ul id="ranking-list"></ul>
         </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="js/scripts.js"></script>
+    <script>
+        // Função para carregar o ranking
+        function loadRanking() {
+            const rankingList = document.getElementById('ranking-list');
+            database.ref('respostas').on('value', (snapshot) => {
+                const data = snapshot.val();
+                rankingList.innerHTML = '';
+                if (data) {
+                    Object.keys(data).forEach((day) => {
+                        Object.keys(data[day]).forEach((timestamp) => {
+                            const answers = data[day][timestamp];
+                            const li = document.createElement('li');
+                            li.textContent = `Dia: ${day}, Respostas: ${JSON.stringify(answers)}`;
+                            rankingList.appendChild(li);
+                        });
+                    });
+                }
+            });
+        }
+
+        // Carrega o ranking ao carregar a página
+        window.onload = function () {
+            loadRanking();
+        };
+    </script>
 </body>
 </html>
