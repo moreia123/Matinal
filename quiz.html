@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz - Rotina Matinais Maxcell</title>
     <link rel="stylesheet" href="css/styles.css">
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <script>
+        // Configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyALiQ04FR2WZpaEkR20HUr1AVDS31QBQkU",
+            authDomain: "matinal-3dab3.firebaseapp.com",
+            projectId: "matinal-3dab3",
+            storageBucket: "matinal-3dab3.firebasestorage.app",
+            messagingSenderId: "168000386914",
+            appId: "1:168000386914:web:f0f71c16e81e974586de3b",
+            measurementId: "G-XFC6LTQ7VL"
+        };
+
+        // Inicializa o Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+    </script>
 </head>
 <body>
     <div class="container">
@@ -73,6 +92,18 @@
             });
         }
 
+        // Função para salvar as respostas no Firebase
+        function saveAnswers(day, answers) {
+            const timestamp = new Date().toISOString();
+            database.ref('respostas/' + day + '/' + timestamp).set(answers)
+                .then(() => {
+                    alert("Respostas salvas com sucesso!");
+                })
+                .catch((error) => {
+                    alert("Erro ao salvar respostas: " + error.message);
+                });
+        }
+
         // Inicia o cronômetro e carrega as perguntas quando a página é carregada
         window.onload = function () {
             const urlParams = new URLSearchParams(window.location.search);
@@ -81,6 +112,18 @@
             document.getElementById('day').value = day;
             loadQuestions(day);
             startTimer(20, document.getElementById('timer'));
+
+            // Adiciona o evento de envio do formulário
+            document.getElementById('quiz-form').addEventListener('submit', function (event) {
+                event.preventDefault();
+                const answers = {};
+                const questions = document.querySelectorAll('.question');
+                questions.forEach((question, index) => {
+                    const selectedOption = question.querySelector('input[type="radio"]:checked');
+                    answers[`q${index + 1}`] = selectedOption ? selectedOption.value : null;
+                });
+                saveAnswers(day, answers);
+            });
         };
     </script>
 </body>
