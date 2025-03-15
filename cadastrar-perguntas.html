@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastrar Perguntas no Firestore</title>
+    <title>Cadastrar Perguntas no Firebase</title>
     <!-- Firebase -->
     <script type="module">
         // Importa os módulos do Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
         // Configuração do Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyALiQ04FR2WZpaEkR20HUr1AVDS31QBQkU",
             authDomain: "matinal-3dab3.firebaseapp.com",
+            databaseURL: "https://matinal-3dab3-default-rtdb.firebaseio.com/", // URL do banco de dados
             projectId: "matinal-3dab3",
-            storageBucket: "matinal-3dab3.appspot.com",
+            storageBucket: "matinal-3dab3.firebasestorage.app",
             messagingSenderId: "168000386914",
             appId: "1:168000386914:web:f0f71c16e81e974586de3b",
             measurementId: "G-XFC6LTQ7VL"
@@ -23,7 +24,17 @@
 
         // Inicializa o Firebase
         const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+        const database = getDatabase(app);
+
+        // Verifica se o banco de dados está acessível
+        const testRef = ref(database, 'test');
+        push(testRef, { message: "Testando conexão com o Firebase..." })
+            .then(() => {
+                console.log("Conexão com o Firebase Realtime Database estabelecida com sucesso!");
+            })
+            .catch((error) => {
+                console.error("Erro ao conectar ao Firebase Realtime Database:", error);
+            });
 
         // Perguntas para cada dia
         const perguntas = {
@@ -55,20 +66,19 @@
         };
 
         // Função para cadastrar as perguntas
-        async function cadastrarPerguntas() {
-            try {
-                for (const dia of Object.keys(perguntas)) {
-                    for (const pergunta of perguntas[dia]) {
-                        const docRef = await addDoc(collection(db, 'perguntas', dia), pergunta);
-                        console.log(`Pergunta cadastrada para ${dia} com ID: ${docRef.id}`);
-                        document.getElementById('status').textContent += `Pergunta cadastrada para ${dia}: ${pergunta.question}\n`;
-                    }
-                }
-                console.log("Todas as perguntas foram cadastradas com sucesso!");
-            } catch (error) {
-                console.error("Erro ao cadastrar perguntas:", error);
-                document.getElementById('status').textContent += `Erro ao cadastrar perguntas: ${error.message}\n`;
-            }
+        function cadastrarPerguntas() {
+            Object.keys(perguntas).forEach((dia) => {
+                perguntas[dia].forEach((pergunta) => {
+                    const perguntasRef = ref(database, 'perguntas/' + dia);
+                    push(perguntasRef, pergunta)
+                        .then(() => {
+                            document.getElementById('status').textContent += `Pergunta cadastrada para ${dia}: ${pergunta.question}\n`;
+                        })
+                        .catch((error) => {
+                            document.getElementById('status').textContent += `Erro ao cadastrar pergunta para ${dia}: ${error.message}\n`;
+                        });
+                });
+            });
         }
 
         // Adiciona o evento de clique ao botão
@@ -117,7 +127,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Cadastrar Perguntas no Firestore</h1>
+        <h1>Cadastrar Perguntas no Firebase</h1>
         <button id="cadastrar-btn">Cadastrar Perguntas</button>
         <div id="status"></div>
     </div>
