@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rotina Matinais Maxcell - Claro</title>
     <link rel="stylesheet" href="css/styles.css">
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <script>
+        // Configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyALiQ04FR2WZpaEkR20HUr1AVDS31QBQkU",
+            authDomain: "matinal-3dab3.firebaseapp.com",
+            projectId: "matinal-3dab3",
+            storageBucket: "matinal-3dab3.firebasestorage.app",
+            messagingSenderId: "168000386914",
+            appId: "1:168000386914:web:f0f71c16e81e974586de3b",
+            measurementId: "G-XFC6LTQ7VL"
+        };
+
+        // Inicializa o Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+    </script>
 </head>
 <body>
     <div class="container">
@@ -15,7 +34,7 @@
 
         <div class="day-selector">
             <label for="day">Selecione o dia:</label>
-            <select id="day">
+            <select id="day" onchange="changeDay()">
                 <option value="segunda">Segunda-feira</option>
                 <option value="terca">Terça-feira</option>
                 <option value="quarta">Quarta-feira</option>
@@ -25,7 +44,7 @@
         </div>
 
         <!-- Conteúdo dos dias -->
-        <div id="segunda" class="content">
+        <div id="segunda" class="content active">
             <h2>Segunda-feira: Planejamento Semanal e Metas</h2>
             <ul>
                 <li>
