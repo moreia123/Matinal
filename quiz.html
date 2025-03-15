@@ -37,16 +37,17 @@
     </div>
 
     <script>
+        let currentQuestionIndex = 0;
+        let timerInterval;
+
         // Função para iniciar o cronômetro
         function startTimer(duration, display) {
-            var timer = duration, seconds;
-            var interval = setInterval(function () {
-                seconds = parseInt(timer % 60, 10);
-                display.textContent = seconds;
+            let timer = duration;
+            timerInterval = setInterval(function () {
+                display.textContent = timer;
                 if (--timer < 0) {
-                    clearInterval(interval);
-                    alert("Tempo esgotado!");
-                    document.getElementById('quiz-form').submit();
+                    clearInterval(timerInterval);
+                    nextQuestion();
                 }
             }, 1000);
         }
@@ -65,35 +66,67 @@
                         ],
                         'correctAnswer': "b"
                     },
+                    {
+                        'question': "2. Qual é a melhor forma de engajar a equipe?",
+                        'options': [
+                            { 'text': "a) Oferecer recompensas.", 'value': "a" },
+                            { 'text': "b) Promover treinamentos.", 'value': "b" },
+                            { 'text': "c) Criar um ambiente colaborativo.", 'value': "c" },
+                            { 'text': "d) Todas as anteriores.", 'value': "d" }
+                        ],
+                        'correctAnswer': "d"
+                    },
                     // Adicione mais perguntas aqui...
                 ],
                 // Repetir para os outros dias...
             };
 
-            const currentQuestions = questions[day];
+            return questions[day];
+        }
+
+        // Função para exibir a próxima pergunta
+        function nextQuestion() {
+            const questions = loadQuestions(document.getElementById('day').value);
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                displayQuestion(questions[currentQuestionIndex]);
+                startTimer(20, document.getElementById('timer'));
+            } else {
+                alert("Quiz concluído!");
+                saveAnswers();
+            }
+        }
+
+        // Função para exibir a pergunta atual
+        function displayQuestion(question) {
             const questionsDiv = document.getElementById('questions');
-            currentQuestions.forEach((question, index) => {
-                const questionDiv = document.createElement('div');
-                questionDiv.classList.add('question');
-                questionDiv.innerHTML = `
+            questionsDiv.innerHTML = `
+                <div class="question">
                     <p>${question.question}</p>
                     <ul>
                         ${question.options.map(option => `
                             <li>
                                 <label>
-                                    <input type="radio" name="q${index + 1}" value="${option.value}">
+                                    <input type="radio" name="q${currentQuestionIndex + 1}" value="${option.value}">
                                     ${option.text}
                                 </label>
                             </li>
                         `).join('')}
                     </ul>
-                `;
-                questionsDiv.appendChild(questionDiv);
-            });
+                </div>
+            `;
         }
 
         // Função para salvar as respostas no Firebase
-        function saveAnswers(day, answers) {
+        function saveAnswers() {
+            const day = document.getElementById('day').value;
+            const answers = {};
+            const questions = document.querySelectorAll('.question');
+            questions.forEach((question, index) => {
+                const selectedOption = question.querySelector('input[type="radio"]:checked');
+                answers[`q${index + 1}`] = selectedOption ? selectedOption.value : null;
+            });
+
             const timestamp = new Date().toISOString();
             database.ref('respostas/' + day + '/' + timestamp).set(answers)
                 .then(() => {
@@ -104,25 +137,23 @@
                 });
         }
 
-        // Inicia o cronômetro e carrega as perguntas quando a página é carregada
+        // Inicia o quiz quando a página é carregada
         window.onload = function () {
             const urlParams = new URLSearchParams(window.location.search);
             const day = urlParams.get('day');
             document.getElementById('quiz-day').textContent = day.charAt(0).toUpperCase() + day.slice(1);
             document.getElementById('day').value = day;
-            loadQuestions(day);
-            startTimer(20, document.getElementById('timer'));
+
+            const questions = loadQuestions(day);
+            if (questions.length > 0) {
+                displayQuestion(questions[currentQuestionIndex]);
+                startTimer(20, document.getElementById('timer'));
+            }
 
             // Adiciona o evento de envio do formulário
             document.getElementById('quiz-form').addEventListener('submit', function (event) {
                 event.preventDefault();
-                const answers = {};
-                const questions = document.querySelectorAll('.question');
-                questions.forEach((question, index) => {
-                    const selectedOption = question.querySelector('input[type="radio"]:checked');
-                    answers[`q${index + 1}`] = selectedOption ? selectedOption.value : null;
-                });
-                saveAnswers(day, answers);
+                nextQuestion();
             });
         };
     </script>
