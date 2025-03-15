@@ -8,7 +8,7 @@
     <script type="module">
         // Importa os módulos do Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+        import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
         // Configuração do Firebase
         const firebaseConfig = {
@@ -65,6 +65,21 @@
             ]
         };
 
+        // Função para verificar se as perguntas já foram cadastradas
+        function verificarPerguntasCadastradas() {
+            const perguntasRef = ref(database, 'perguntas');
+            onValue(perguntasRef, (snapshot) => {
+                if (snapshot.exists()) {
+                    console.log("Perguntas já cadastradas anteriormente.");
+                    document.getElementById('status').textContent = "As perguntas já foram cadastradas!";
+                    document.getElementById('cadastrar-btn').disabled = true; // Desabilita o botão
+                } else {
+                    console.log("Nenhuma pergunta cadastrada ainda.");
+                    document.getElementById('status').textContent = "Clique no botão para cadastrar as perguntas.";
+                }
+            });
+        }
+
         // Função para cadastrar as perguntas
         function cadastrarPerguntas() {
             Object.keys(perguntas).forEach((dia) => {
@@ -79,7 +94,14 @@
                         });
                 });
             });
+
+            // Desabilita o botão após o cadastro
+            document.getElementById('cadastrar-btn').disabled = true;
+            document.getElementById('status').textContent += "Todas as perguntas foram cadastradas com sucesso!";
         }
+
+        // Verifica se as perguntas já foram cadastradas ao carregar a página
+        verificarPerguntasCadastradas();
 
         // Adiciona o evento de clique ao botão
         document.getElementById('cadastrar-btn').addEventListener('click', cadastrarPerguntas);
@@ -117,6 +139,10 @@
         }
         button:hover {
             background-color: #e65c00;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
         }
         #status {
             margin-top: 20px;
