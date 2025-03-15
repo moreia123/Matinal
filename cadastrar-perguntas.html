@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Perguntas no Firebase</title>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #003366;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            background-color: #FF6600;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #e65c00;
+        }
+        #status {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cadastrar Perguntas no Firebase</h1>
+        <button id="cadastrar-btn">Cadastrar Perguntas</button>
+        <div id="status"></div>
+    </div>
+
+    <script>
+        // Configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyALiQ04FR2WZpaEkR20HUr1AVDS31QBQkU",
+            authDomain: "matinal-3dab3.firebaseapp.com",
+            projectId: "matinal-3dab3",
+            storageBucket: "matinal-3dab3.firebasestorage.app",
+            messagingSenderId: "168000386914",
+            appId: "1:168000386914:web:f0f71c16e81e974586de3b",
+            measurementId: "G-XFC6LTQ7VL"
+        };
+
+        // Inicializa o Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Perguntas para cada dia
+        const perguntas = {
+            segunda: [
+                {
+                    question: "Qual é o principal objetivo do planejamento semanal?",
+                    options: [
+                        { text: "a) Apenas definir metas.", value: "a" },
+                        { text: "b) Definir metas e planejar estratégias.", value: "b" },
+                        { text: "c) Ignorar as metas da semana anterior.", value: "c" },
+                        { text: "d) Focar apenas em vendas.", value: "d" }
+                    ],
+                    correctAnswer: "b"
+                },
+                {
+                    question: "Qual é a melhor forma de engajar a equipe?",
+                    options: [
+                        { text: "a) Oferecer recompensas.", value: "a" },
+                        { text: "b) Promover treinamentos.", value: "b" },
+                        { text: "c) Criar um ambiente colaborativo.", value: "c" },
+                        { text: "d) Todas as anteriores.", value: "d" }
+                    ],
+                    correctAnswer: "d"
+                },
+                {
+                    question: "Qual é a importância de revisar as metas diariamente?",
+                    options: [
+                        { text: "a) Manter o foco.", value: "a" },
+                        { text: "b) Ajustar estratégias.", value: "b" },
+                        { text: "c) Motivar a equipe.", value: "c" },
+                        { text: "d) Todas as anteriores.", value: "d" }
+                    ],
+                    correctAnswer: "d"
+                },
+                {
+                    question: "Como dividir metas semanais em metas diárias?",
+                    options: [
+                        { text: "a) Definir um número fixo de tarefas por dia.", value: "a" },
+                        { text: "b) Priorizar as tarefas mais importantes.", value: "b" },
+                        { text: "c) Ajustar conforme o andamento da semana.", value: "c" },
+                        { text: "d) Todas as anteriores.", value: "d" }
+                    ],
+                    correctAnswer: "d"
+                },
+                {
+                    question: "Qual é a importância de um planejamento bem estruturado?",
+                    options: [
+                        { text: "a) Aumentar a produtividade.", value: "a" },
+                        { text: "b) Reduzir o estresse.", value: "b" },
+                        { text: "c) Garantir o cumprimento das metas.", value: "c" },
+                        { text: "d) Todas as anteriores.", value: "d" }
+                    ],
+                    correctAnswer: "d"
+                }
+            ],
+            terca: [
+                // 5 perguntas para Terça-feira...
+            ],
+            quarta: [
+                // 5 perguntas para Quarta-feira...
+            ],
+            quinta: [
+                // 5 perguntas para Quinta-feira...
+            ],
+            sexta: [
+                // 5 perguntas para Sexta-feira...
+            ]
+        };
+
+        // Função para cadastrar as perguntas
+        function cadastrarPerguntas() {
+            Object.keys(perguntas).forEach((dia) => {
+                perguntas[dia].forEach((pergunta) => {
+                    database.ref('perguntas/' + dia).push(pergunta)
+                        .then(() => {
+                            document.getElementById('status').textContent += `Pergunta cadastrada para ${dia}: ${pergunta.question}\n`;
+                        })
+                        .catch((error) => {
+                            document.getElementById('status').textContent += `Erro ao cadastrar pergunta para ${dia}: ${error.message}\n`;
+                        });
+                });
+            });
+        }
+
+        // Adiciona o evento de clique ao botão
+        document.getElementById('cadastrar-btn').addEventListener('click', cadastrarPerguntas);
+    </script>
+</body>
+</html>
