@@ -137,8 +137,11 @@ header h1 {
     margin-bottom: 20px;
 }
 
+/* Centraliza o QR Code */
 .qr-code {
-    text-align: center;
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
     margin: 20px 0;
 }
 
