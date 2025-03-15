@@ -8,12 +8,13 @@
     <script type="module">
         // Importa os módulos do Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-        import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
         // Configuração do Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyALiQ04FR2WZpaEkR20HUr1AVDS31QBQkU",
             authDomain: "matinal-3dab3.firebaseapp.com",
+            databaseURL: "https://matinal-3dab3-default-rtdb.firebaseio.com/", // URL do banco de dados
             projectId: "matinal-3dab3",
             storageBucket: "matinal-3dab3.firebasestorage.app",
             messagingSenderId: "168000386914",
