@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - Rotina Matinais Maxcell</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Quiz: <span id="quiz-day"></span></h1>
+        <form id="quiz-form">
+            <input type="hidden" name="day" id="day">
+            <div id="questions"></div>
+            <button type="submit">Enviar Respostas</button>
+        </form>
+        <div class="timer" id="timer">20</div>
+    </div>
+
+    <script>
+        // Função para iniciar o cronômetro
+        function startTimer(duration, display) {
+            var timer = duration, seconds;
+            var interval = setInterval(function () {
+                seconds = parseInt(timer % 60, 10);
+                display.textContent = seconds;
+                if (--timer < 0) {
+                    clearInterval(interval);
+                    alert("Tempo esgotado!");
+                    document.getElementById('quiz-form').submit();
+                }
+            }, 1000);
+        }
+
+        // Função para carregar as perguntas
+        function loadQuestions(day) {
+            const questions = {
+                'segunda': [
+                    {
+                        'question': "1. Qual é o principal objetivo do planejamento semanal?",
+                        'options': [
+                            { 'text': "a) Apenas definir metas.", 'value': "a" },
+                            { 'text': "b) Definir metas e planejar estratégias.", 'value': "b" },
+                            { 'text': "c) Ignorar as metas da semana anterior.", 'value': "c" },
+                            { 'text': "d) Focar apenas em vendas.", 'value': "d" }
+                        ],
+                        'correctAnswer': "b"
+                    },
+                    // Adicione mais perguntas aqui...
+                ],
+                // Repetir para os outros dias...
+            };
+
+            const currentQuestions = questions[day];
+            const questionsDiv = document.getElementById('questions');
+            currentQuestions.forEach((question, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('question');
+                questionDiv.innerHTML = `
+                    <p>${question.question}</p>
+                    <ul>
+                        ${question.options.map(option => `
+                            <li>
+                                <label>
+                                    <input type="radio" name="q${index + 1}" value="${option.value}">
+                                    ${option.text}
+                                </label>
+                            </li>
+                        `).join('')}
+                    </ul>
+                `;
+                questionsDiv.appendChild(questionDiv);
+            });
+        }
+
+        // Inicia o cronômetro e carrega as perguntas quando a página é carregada
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const day = urlParams.get('day');
+            document.getElementById('quiz-day').textContent = day.charAt(0).toUpperCase() + day.slice(1);
+            document.getElementById('day').value = day;
+            loadQuestions(day);
+            startTimer(20, document.getElementById('timer'));
+        };
+    </script>
+</body>
+</html>
