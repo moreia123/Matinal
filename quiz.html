@@ -76,6 +76,19 @@
                     },
                     // Adicione mais perguntas aqui...
                 ],
+                'terca': [
+                    {
+                        'question': "1. Qual é o foco do atendimento ao cliente?",
+                        'options': [
+                            { 'text': "a) Resolver problemas rapidamente.", 'value': "a" },
+                            { 'text': "b) Oferecer um bom atendimento.", 'value': "b" },
+                            { 'text': "c) Garantir a satisfação do cliente.", 'value': "c" },
+                            { 'text': "d) Todas as anteriores.", 'value': "d" }
+                        ],
+                        'correctAnswer': "d"
+                    },
+                    // Adicione mais perguntas aqui...
+                ],
                 // Repetir para os outros dias...
             }[day];
         }
@@ -164,6 +177,8 @@
             if (questions.length > 0) {
                 displayQuestion(questions[currentQuestionIndex]);
                 startTimer(10, document.getElementById('timer'));
+            } else {
+                alert("Nenhuma pergunta encontrada para este dia.");
             }
         };
     </script>
