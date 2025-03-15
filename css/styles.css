@@ -189,3 +189,53 @@ header h1 {
 .back-button button:hover {
     background-color: var(--cor-secundaria);
 }
+/* Estilo do formulário de cadastro */
+#login {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--cor-branca);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+#login h2 {
+    color: var(--cor-primaria);
+    margin-bottom: 20px;
+}
+
+#login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#login-form label {
+    font-weight: bold;
+    color: var(--cor-primaria);
+    text-align: left;
+}
+
+#login-form input {
+    padding: 10px;
+    border: 2px solid var(--cor-secundaria);
+    border-radius: 5px;
+    font-size: 16px;
+    color: var(--cor-texto);
+}
+
+#login-form button {
+    padding: 10px 20px;
+    background-color: var(--cor-secundaria);
+    color: var(--cor-branca);
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#login-form button:hover {
+    background-color: var(--cor-primaria);
+}
