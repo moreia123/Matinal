@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotina Matinais Maxcell - Claro</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="images/logo.png" alt="Logo da Empresa">
+            <h1>Rotina Matinais Maxcell - Claro</h1>
+        </header>
+
+        <div class="day-selector">
+            <label for="day">Selecione o dia:</label>
+            <select id="day">
+                <option value="segunda">Segunda-feira</option>
+                <option value="terca">Terça-feira</option>
+                <option value="quarta">Quarta-feira</option>
+                <option value="quinta">Quinta-feira</option>
+                <option value="sexta">Sexta-feira</option>
+            </select>
+        </div>
+
+        <!-- Conteúdo dos dias -->
+        <div id="segunda" class="content">
+            <h2>Segunda-feira: Planejamento Semanal e Metas</h2>
+            <ul>
+                <li>
+                    <strong>Objetivo:</strong> Definir metas claras para a semana e planejar estratégias de vendas.
+                </li>
+                <li>
+                    <strong>Exemplo Prático:</strong>
+                    <ul>
+                        <li><strong>Meta:</strong> Vender 20 combos de aparelho + seguro até sexta-feira.</li>
+                        <li><strong>Ação:</strong> Dividir a meta em 4 combos por dia.</li>
+                        <li><strong>Dica:</strong> Use a calculadora do cliente para mostrar o valor economizado com o plano Multi da Claro.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Frase Motivacional:</strong> "Uma semana bem planejada é metade do caminho para o sucesso!"
+                </li>
+            </ul>
+            <div class="quiz-button">
+                <button onclick="openQuiz('segunda')">Pronto para testar seu conhecimento?</button>
+            </div>
+        </div>
+
+        <div id="terca" class="content">
+            <h2>Terça-feira: Técnicas de Vendas Avançadas</h2>
+            <ul>
+                <li>
+                    <strong>Objetivo:</strong> Aprender técnicas avançadas para aumentar as vendas.
+                </li>
+                <li>
+                    <strong>Exemplo Prático:</strong>
+                    <ul>
+                        <li><strong>Escuta Ativa:</strong> Pergunte ao cliente: "O que você mais valoriza em um plano de telefonia?"</li>
+                        <li><strong>Benefícios da Claro:</strong> Destaque a cobertura superior e os benefícios exclusivos, como internet ilimitada e chamadas gratuitas.</li>
+                        <li><strong>Dica:</strong> Ofereça um plano personalizado com base no perfil do cliente.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Frase Motivacional:</strong> "Cada venda é uma oportunidade de superar expectativas!"
+                </li>
+            </ul>
+            <div class="quiz-button">
+                <button onclick="openQuiz('terca')">Pronto para testar seu conhecimento?</button>
+            </div>
+        </div>
+
+        <div id="quarta" class="content">
+            <h2>Quarta-feira: Foco no Atendimento ao Cliente</h2>
+            <ul>
+                <li>
+                    <strong>Objetivo:</strong> Melhorar a experiência do cliente para fidelizá-lo.
+                </li>
+                <li>
+                    <strong>Exemplo Prático:</strong>
+                    <ul>
+                        <li><strong>Suporte Pós-Venda:</strong> Após a venda, envie uma mensagem agradecendo e oferecendo suporte.</li>
+                        <li><strong>Feedback:</strong> Use feedbacks para melhorar continuamente o atendimento.</li>
+                        <li><strong>Dica:</strong> Antecipe as necessidades do cliente, como oferecer um seguro para o aparelho.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Frase Motivacional:</strong> "Um cliente satisfeito é o melhor promotor da sua marca!"
+                </li>
+            </ul>
+            <div class="quiz-button">
+                <button onclick="openQuiz('quarta')">Pronto para testar seu conhecimento?</button>
+            </div>
+        </div>
+
+        <div id="quinta" class="content">
+            <h2>Quinta-feira: Lidando com Objeções</h2>
+            <ul>
+                <li>
+                    <strong>Objetivo:</strong> Transformar objeções em oportunidades de venda.
+                </li>
+                <li>
+                    <strong>Exemplo Prático:</strong>
+                    <ul>
+                        <li><strong>Objeção:</strong> "Está muito caro."</li>
+                        <li><strong>Resposta:</strong> "Entendo sua preocupação, mas com o plano Multi da Claro, você economiza a longo prazo com benefícios como internet ilimitada e chamadas gratuitas."</li>
+                        <li><strong>Dica:</strong> Use dados e exemplos para reforçar seus argumentos.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Frase Motivacional:</strong> "Cada objeção é uma chance de mostrar o valor da Claro!"
+                </li>
+            </ul>
+            <div class="quiz-button">
+                <button onclick="openQuiz('quinta')">Pronto para testar seu conhecimento?</button>
+            </div>
+        </div>
+
+        <div id="sexta" class="content">
+            <h2>Sexta-feira: Revisão Semanal e Celebração</h2>
+            <ul>
+                <li>
+                    <strong>Objetivo:</strong> Revisar os resultados da semana e celebrar as conquistas.
+                </li>
+                <li>
+                    <strong>Exemplo Prático:</strong>
+                    <ul>
+                        <li><strong>Análise:</strong> Analise os números da semana e identifique pontos fortes e fracos.</li>
+                        <li><strong>Celebração:</strong> Reconheça e celebre as conquistas da equipe.</li>
+                        <li><strong>Dica:</strong> Planeje ajustes para a próxima semana, como focar em vendas de seguros.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Frase Motivacional:</strong> "Cada semana é uma nova oportunidade para brilhar!"
+                </li>
+            </ul>
+            <div class="quiz-button">
+                <button onclick="openQuiz('sexta')">Pronto para testar seu conhecimento?</button>
+            </div>
+        </div>
+
+        <!-- Páginas de Quiz -->
+        <div id="quiz-segunda" class="quiz-page">
+            <h3>Quiz: Segunda-feira</h3>
+            <div class="qr-code" id="qr-code-segunda"></div>
+            <div class="timer" id="timer-segunda">20</div>
+            <div class="result" id="result-segunda"></div>
+            <div class="back-button">
+                <button onclick="goBack()">Voltar ao Conteúdo</button>
+            </div>
+        </div>
+
+        <div id="quiz-terca" class="quiz-page">
+            <h3>Quiz: Terça-feira</h3>
+            <div class="qr-code" id="qr-code-terca"></div>
+            <div class="timer" id="timer-terca">20</div>
+            <div class="result" id="result-terca"></div>
+            <div class="back-button">
+                <button onclick="goBack()">Voltar ao Conteúdo</button>
+            </div>
+        </div>
+
+        <div id="quiz-quarta" class="quiz-page">
+            <h3>Quiz: Quarta-feira</h3>
+            <div class="qr-code" id="qr-code-quarta"></div>
+            <div class="timer" id="timer-quarta">20</div>
+            <div class="result" id="result-quarta"></div>
+            <div class="back-button">
+                <button onclick="goBack()">Voltar ao Conteúdo</button>
+            </div>
+        </div>
+
+        <div id="quiz-quinta" class="quiz-page">
+            <h3>Quiz: Quinta-feira</h3>
+            <div class="qr-code" id="qr-code-quinta"></div>
+            <div class="timer" id="timer-quinta">20</div>
+            <div class="result" id="result-quinta"></div>
+            <div class="back-button">
+                <button onclick="goBack()">Voltar ao Conteúdo</button>
+            </div>
+        </div>
+
+        <div id="quiz-sexta" class="quiz-page">
+            <h3>Quiz: Sexta-feira</h3>
+            <div class="qr-code" id="qr-code-sexta"></div>
+            <div class="timer" id="timer-sexta">20</div>
+            <div class="result" id="result-sexta"></div>
+            <div class="back-button">
+                <button onclick="goBack()">Voltar ao Conteúdo</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="js/scripts.js"></script>
+</body>
+</html>

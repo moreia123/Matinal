@@ -1,0 +1,188 @@
+/* Cores baseadas na imagem da empresa */
+:root {
+    --cor-primaria: #003366; /* Azul escuro */
+    --cor-secundaria: #FF6600; /* Laranja */
+    --cor-fundo: #F4F4F4; /* Cinza claro */
+    --cor-texto: #333333; /* Cinza escuro */
+    --cor-branca: #FFFFFF; /* Branco */
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--cor-fundo);
+    margin: 0;
+    padding: 0;
+    color: var(--cor-texto);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--cor-branca);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    text-align: center;
+    padding: 20px 0;
+    background-color: var(--cor-primaria);
+    color: var(--cor-branca);
+    border-radius: 10px 10px 0 0;
+}
+
+header img {
+    max-width: 150px;
+    margin-bottom: 10px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5em;
+}
+
+.day-selector {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.day-selector select {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 2px solid var(--cor-secundaria);
+    border-radius: 5px;
+    background-color: var(--cor-branca);
+    color: var(--cor-primaria);
+    cursor: pointer;
+}
+
+.content {
+    display: none;
+    padding: 20px;
+    background-color: var(--cor-branca);
+    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.content.active {
+    display: block;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.content h2 {
+    color: var(--cor-primaria);
+    margin-bottom: 20px;
+}
+
+.content ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.content ul li {
+    background-color: var(--cor-fundo);
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 5px;
+    border-left: 5px solid var(--cor-secundaria);
+}
+
+.content ul li strong {
+    color: var(--cor-primaria);
+}
+
+.quiz-button {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.quiz-button button {
+    padding: 10px 30px;
+    background-color: var(--cor-secundaria);
+    color: var(--cor-branca);
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.quiz-button button:hover {
+    background-color: var(--cor-primaria);
+}
+
+.quiz-page {
+    display: none;
+    padding: 20px;
+    background-color: var(--cor-branca);
+    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.quiz-page.active {
+    display: block;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.quiz-page h3 {
+    color: var(--cor-primaria);
+    margin-bottom: 20px;
+}
+
+.qr-code {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.timer {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--cor-secundaria);
+    margin: 20px 0;
+}
+
+.result {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: var(--cor-fundo);
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.result.correct {
+    color: #28a745; /* Verde */
+}
+
+.result.incorrect {
+    color: #dc3545; /* Vermelho */
+}
+
+.back-button {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.back-button button {
+    padding: 10px 20px;
+    background-color: var(--cor-primaria);
+    color: var(--cor-branca);
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.back-button button:hover {
+    background-color: var(--cor-secundaria);
+}
