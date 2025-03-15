@@ -30,5 +30,18 @@ function goBack() {
     document.getElementById(selectedDay).classList.add('active');
 }
 
+// Função para mudar o conteúdo ao selecionar o dia
+function changeDay() {
+    var selectedDay = document.getElementById('day').value;
+    var contents = document.querySelectorAll('.content');
+    contents.forEach(function(content) {
+        content.classList.remove('active');
+    });
+    document.getElementById(selectedDay).classList.add('active');
+}
+
 // Inicializa com o primeiro dia visível
 document.getElementById('segunda').classList.add('active');
+
+// Adiciona o evento de mudança ao select
+document.getElementById('day').addEventListener('change', changeDay);
