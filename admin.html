@@ -61,6 +61,9 @@
         </form>
 
         <div id="status"></div>
+
+        <h2>Perguntas Cadastradas</h2>
+        <div id="perguntas-cadastradas"></div>
     </div>
 
     <script>
@@ -88,11 +91,48 @@
                 .then(() => {
                     document.getElementById('status').textContent = "Pergunta cadastrada com sucesso!";
                     document.getElementById('question-form').reset(); // Limpa o formulário
+                    loadPerguntasCadastradas(day); // Atualiza a lista de perguntas
                 })
                 .catch((error) => {
                     document.getElementById('status').textContent = "Erro ao cadastrar pergunta: " + error.message;
                 });
         });
+
+        // Função para carregar as perguntas cadastradas
+        function loadPerguntasCadastradas(day) {
+            database.ref('perguntas/' + day).once('value', (snapshot) => {
+                const data = snapshot.val();
+                const perguntasCadastradasDiv = document.getElementById('perguntas-cadastradas');
+                perguntasCadastradasDiv.innerHTML = '';
+
+                if (data) {
+                    Object.values(data).forEach((pergunta, index) => {
+                        const perguntaDiv = document.createElement('div');
+                        perguntaDiv.classList.add('pergunta-cadastrada');
+                        perguntaDiv.innerHTML = `
+                            <p><strong>Pergunta ${index + 1}:</strong> ${pergunta.question}</p>
+                            <ul>
+                                ${pergunta.options.map(option => `<li>${option.text}</li>`).join('')}
+                            </ul>
+                            <p><strong>Resposta correta:</strong> ${pergunta.correctAnswer}</p>
+                        `;
+                        perguntasCadastradasDiv.appendChild(perguntaDiv);
+                    });
+                } else {
+                    perguntasCadastradasDiv.innerHTML = "<p>Nenhuma pergunta cadastrada para este dia.</p>";
+                }
+            });
+        }
+
+        // Carrega as perguntas ao selecionar o dia
+        document.getElementById('day').addEventListener('change', function () {
+            loadPerguntasCadastradas(this.value);
+        });
+
+        // Carrega as perguntas ao abrir a página
+        window.onload = function () {
+            loadPerguntasCadastradas('segunda');
+        };
     </script>
 </body>
 </html>
