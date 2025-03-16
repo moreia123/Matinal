@@ -45,6 +45,7 @@
 
     <script>
         let vendedor = null;
+        let questions = []; // Variável para armazenar as perguntas
 
         // Função para iniciar o quiz
         document.getElementById('login-form').addEventListener('submit', function (event) {
@@ -64,9 +65,10 @@
         function loadQuestions(day) {
             const questionsRef = database.ref(`perguntas/${day}`);
             questionsRef.once('value').then((snapshot) => {
-                const questions = snapshot.val();
-                if (questions) {
-                    displayQuestion(questions, 0); // Exibe a primeira pergunta
+                const data = snapshot.val();
+                if (data) {
+                    questions = Object.values(data); // Converte o objeto em array
+                    displayQuestion(0); // Exibe a primeira pergunta
                     startTimer(); // Inicia o timer
                 } else {
                     alert("Nenhuma pergunta encontrada para este dia.");
@@ -77,7 +79,7 @@
         }
 
         // Função para exibir uma pergunta
-        function displayQuestion(questions, index) {
+        function displayQuestion(index) {
             const question = questions[index];
             const questionsDiv = document.getElementById('questions');
             questionsDiv.innerHTML = `
@@ -102,7 +104,7 @@
             }
             // Avança para a próxima pergunta
             if (questionIndex + 1 < questions.length) {
-                displayQuestion(questions, questionIndex + 1);
+                displayQuestion(questionIndex + 1);
             } else {
                 alert("Quiz concluído!");
                 saveResults();
